@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>indiansarbhathcompany.com - Loading...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #ffffff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 100px;
+        }
+
+        .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            animation: jump 0.6s ease-in-out infinite alternate;
+        }
+
+        .dot:nth-child(1) {
+            background-color: #f97316; /* orange-500 */
+            animation-delay: 0s;
+        }
+
+        .dot:nth-child(2) {
+            background-color: #ef4444; /* red-500 */
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            background-color: #ea580c; /* orange-600 */
+            animation-delay: 0.4s;
+        }
+
+        @keyframes jump {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .brand-text {
+            position: absolute;
+            bottom: 128px;
+            text-align: center;
+            animation: fade 2s ease-in-out infinite alternate;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937; /* gray-800 */
+            margin-bottom: 8px;
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: #6b7280; /* gray-600 */
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Hide the loading screen when Next.js app loads */
+        .next-loaded {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container" id="initial-loading">
+        <!-- Jumping Dots -->
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <!-- Brand Text -->
+        <div class="brand-text">
+            <h1 class="brand-name">indiansarbhathcompany.com</h1>
+            <p class="loading-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Next.js app will be mounted here -->
+    <div id="__next"></div>
+
+    <script>
+        // Hide the loading screen when the page is fully loaded
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingElement = document.getElementById('initial-loading');
+                if (loadingElement) {
+                    loadingElement.style.opacity = '0';
+                    loadingElement.style.transition = 'opacity 0.5s ease-out';
+                    setTimeout(function() {
+                        loadingElement.style.display = 'none';
+                    }, 500);
+                }
+            }, 1000); // Show loading for at least 1 second
+        });
+
+        // Also hide when DOMContentLoaded if Next.js loads quickly
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const nextRoot = document.getElementById('__next');
+                if (nextRoot && nextRoot.children.length > 0) {
+                    const loadingElement = document.getElementById('initial-loading');
+                    if (loadingElement) {
+                        loadingElement.classList.add('next-loaded');
+                    }
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
