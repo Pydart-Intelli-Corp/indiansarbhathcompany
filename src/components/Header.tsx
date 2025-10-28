@@ -1,245 +1,194 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
-import UnderConstruction from './UnderConstruction'
+import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 const Header = () => {
-  const [showModal, setShowModal] = useState(false)
-  const [activeButton, setActiveButton] = useState('')
+  const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const handleButtonClick = (buttonName: string) => {
-    setActiveButton(buttonName)
-    setShowModal(true)
-    setIsMobileMenuOpen(false) // Close mobile menu when button is clicked
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const navItems = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Products', href: '#products' },
+    { name: 'Mission', href: '#mission' },
+    { name: 'Partner', href: '#partner' },
+    { name: 'Contact', href: '#contact' }
+  ]
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+    setIsMobileMenuOpen(false)
   }
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
   return (
     <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="fixed top-0 w-full z-50 p-3 sm:p-4 md:p-6"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-xl border-b border-neutral-200/80 shadow-lg' 
+          : 'bg-transparent'
+      }`}
     >
-      <nav className="md:glass md:rounded-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 mx-auto max-w-7xl">
-        <div className="flex items-center justify-between">
-          {/* Logo - Hidden on Mobile */}
+      <div className="container-modern">
+        <div className="flex items-center justify-between py-4 lg:py-6">
+          {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="hidden md:flex items-center space-x-3"
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center space-x-4 cursor-pointer"
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">S</span>
-            </div>
-            <div>
-              <h1 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl">indiansarbhathcompany.com</h1>
-              <p className="text-white/70 text-xs hidden sm:block">Premium Refreshing Drinks</p>
+            <motion.div
+              className={`w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center shadow-medium transition-all duration-300 overflow-hidden ${
+                isScrolled 
+                  ? 'bg-white border border-accent-200' 
+                  : 'bg-white/90 border border-white/30'
+              }`}
+              whileHover={{ rotate: 5, scale: 1.1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Image
+                src="/logo.png"
+                alt="Indian Sarbhath Company Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+                priority
+              />
+            </motion.div>
+            <div className="hidden sm:block">
+              <h1 className={`text-xl lg:text-2xl font-bold transition-colors duration-300 ${
+                isScrolled ? 'text-neutral-900' : 'text-white'
+              }`}>
+                Indian Sarbhath Co.
+              </h1>
+              <p className={`text-sm lg:text-base transition-colors duration-300 ${
+                isScrolled ? 'text-neutral-600' : 'text-white/80'
+              }`}>
+                Refreshing Tradition
+              </p>
             </div>
           </motion.div>
 
-          {/* Mobile - Empty div to push hamburger to right */}
-          <div className="md:hidden"></div>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-8">
+            {navItems.map((item, index) => (
+              <motion.button
+                key={item.name}
+                onClick={() => scrollToSection(item.href)}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`relative px-4 py-2 font-medium transition-all duration-300 rounded-lg hover:scale-105 ${
+                  isScrolled 
+                    ? 'text-neutral-700 hover:text-accent-600 hover:bg-accent-50' 
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {item.name}
+                <motion.div
+                  className="absolute bottom-0 left-0 h-0.5 bg-accent-500"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: '100%' }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+            ))}
+          </nav>
 
-          {/* Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* CTA Button */}
+          <div className="hidden lg:flex items-center space-x-4">
             <motion.button
-              whileHover={{ scale: 1.1, color: "#ffd700" }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleButtonClick("Home")}
-              className="text-white/90 hover:text-white transition-colors font-medium cursor-pointer"
+              className={`px-6 py-3 font-semibold rounded-full transition-all duration-300 shadow-medium ${
+                isScrolled
+                  ? 'bg-gradient-to-r from-accent-400 to-accent-600 text-white hover:shadow-large'
+                  : 'bg-white text-accent-600 hover:bg-white/90 hover:shadow-lg'
+              }`}
             >
-              Home
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1, color: "#ffd700" }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleButtonClick("About")}
-              className="text-white/90 hover:text-white transition-colors font-medium cursor-pointer"
-            >
-              About
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1, color: "#ffd700" }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleButtonClick("Products")}
-              className="text-white/90 hover:text-white transition-colors font-medium cursor-pointer"
-            >
-              Products
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1, color: "#ffd700" }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleButtonClick("Contact")}
-              className="text-white/90 hover:text-white transition-colors font-medium cursor-pointer"
-            >
-              Contact
+              Get Started
             </motion.button>
           </div>
 
-          {/* Desktop CTA Button */}
-          <div className="hidden md:block">
-            <motion.button
-              whileHover={{ 
-                scale: 1.05, 
-                boxShadow: "0 15px 40px rgba(255,255,255,0.3)",
-                backgroundImage: "linear-gradient(45deg, #ff6b35, #f7931e)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleButtonClick("Order Now")}
-              className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg cursor-pointer"
-            >
-              Order Now
-            </motion.button>
-          </div>
-
-          {/* Mobile Hamburger Menu */}
-          <div className="md:hidden">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={toggleMobileMenu}
-              className="text-white p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
-            >
-              <div className="w-6 h-6 flex flex-col justify-center items-center">
-                <motion.span
-                  animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                  className="w-6 h-0.5 bg-white block transition-all origin-center"
-                />
-                <motion.span
-                  animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  className="w-6 h-0.5 bg-white block mt-1 transition-all"
-                />
-                <motion.span
-                  animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                  className="w-6 h-0.5 bg-white block mt-1 transition-all origin-center"
-                />
-              </div>
-            </motion.button>
-          </div>
+          {/* Mobile Menu Button */}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className={`lg:hidden p-3 rounded-xl transition-all duration-300 ${
+              isScrolled 
+                ? 'text-neutral-600 hover:bg-neutral-100' 
+                : 'text-white hover:bg-white/10'
+            }`}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </motion.button>
         </div>
-      </nav>
 
-      {/* Mobile Drawer - Slides in from right */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-            
-            {/* Mobile Drawer */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ 
-                type: 'spring', 
-                stiffness: 300, 
-                damping: 30 
-              }}
-              className="fixed top-0 right-0 h-full w-80 max-w-[80vw] z-50 md:hidden"
-            >
-              <div className="h-full bg-gradient-to-b from-gray-900/95 to-black/95 backdrop-blur-xl border-l border-white/10 shadow-2xl">
-                {/* Drawer Header */}
-                <div className="p-6 border-b border-white/10">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">S</span>
-                      </div>
-                      <div>
-                        <h2 className="text-white font-bold text-base">Menu</h2>
-                        <p className="text-white/60 text-xs">indiansarbhathcompany.com</p>
-                      </div>
-                    </div>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-white/70 hover:text-white p-2"
-                    >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </motion.button>
-                  </div>
-                </div>
-
-                {/* Navigation Items */}
-                <div className="p-6">
-                  <nav className="space-y-4">
-                    {['Home', 'About', 'Products', 'Contact'].map((item, index) => (
-                      <motion.button
-                        key={item}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 + 0.2 }}
-                        whileHover={{ 
-                          x: 10, 
-                          color: "#ffd700",
-                          transition: { duration: 0.2 }
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => handleButtonClick(item)}
-                        className="block w-full text-left text-white/90 hover:text-white text-base font-medium py-3 px-4 rounded-lg hover:bg-white/10 transition-all"
-                      >
-                        {item}
-                      </motion.button>
-                    ))}
-                  </nav>
-
-                  {/* Mobile CTA Button */}
-                  <motion.button
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    whileHover={{ 
-                      scale: 1.05, 
-                      boxShadow: "0 15px 40px rgba(255,123,53,0.4)",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleButtonClick("Order Now")}
-                    className="w-full mt-8 bg-gradient-to-r from-orange-500 to-red-600 text-white py-4 rounded-xl font-semibold shadow-lg"
-                  >
-                    Order Now
-                  </motion.button>
-
-                  {/* Decorative Elements */}
-                  <div className="mt-8 pt-8 border-t border-white/10">
-                    <p className="text-white/50 text-sm text-center">
-                      Premium Refreshing Drinks
-                    </p>
-                    <div className="flex justify-center mt-4 space-x-2">
-                      <div className="w-2 h-2 bg-orange-400/60 rounded-full animate-pulse" />
-                      <div className="w-2 h-2 bg-red-400/60 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-                      <div className="w-2 h-2 bg-yellow-400/60 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-                    </div>
-                  </div>
-                </div>
+        {/* Mobile Navigation */}
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ 
+            opacity: isMobileMenuOpen ? 1 : 0,
+            height: isMobileMenuOpen ? 'auto' : 0
+          }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="lg:hidden overflow-hidden"
+        >
+          <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-large border border-neutral-200/50 mb-4 p-6">
+            <nav className="space-y-2">
+              {navItems.map((item, index) => (
+                <motion.button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ 
+                    opacity: isMobileMenuOpen ? 1 : 0,
+                    x: isMobileMenuOpen ? 0 : -20
+                  }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  className="block w-full text-left px-4 py-3 text-neutral-700 hover:text-accent-600 hover:bg-accent-50 rounded-xl transition-all duration-200 font-medium"
+                >
+                  {item.name}
+                </motion.button>
+              ))}
+              <div className="pt-4 border-t border-neutral-200">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-accent-400 to-accent-600 text-white font-semibold rounded-xl shadow-medium hover:shadow-large transition-all duration-200"
+                >
+                  Get Started
+                </motion.button>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Under Construction Modal */}
-      <UnderConstruction
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        buttonName={activeButton}
-      />
+            </nav>
+          </div>
+        </motion.div>
+      </div>
     </motion.header>
   )
 }
 
 export default Header
+ 

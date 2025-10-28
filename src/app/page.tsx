@@ -3,8 +3,14 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Header from '@/components/Header'
-import VideoBackground from '@/components/VideoBackground'
 import HeroSection from '@/components/HeroSection'
+import AboutSection from '@/components/AboutSection'
+import ProductsSection from '@/components/ProductsSection'
+import MissionSection from '@/components/MissionSection'
+import WhyChooseSection from '@/components/WhyChooseSection'
+import PartnerSection from '@/components/PartnerSection'
+import ContactSection from '@/components/ContactSection'
+import Footer from '@/components/Footer'
 import CursorEffect from '@/components/CursorEffect'
 import LoadingScreen from '@/components/LoadingScreen'
 
@@ -25,10 +31,10 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    // Simulate loading time (you can adjust this or tie it to actual content loading)
+    // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 2000) // 2 seconds loading time
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [])
@@ -57,14 +63,20 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="relative min-h-screen overflow-hidden"
+            className="relative min-h-screen"
           >
-            <VideoBackground />
             <CursorEffect mousePosition={mousePosition} />
             
             <div className="relative z-10">
               <Header />
               <HeroSection />
+              <AboutSection />
+              <ProductsSection />
+              <MissionSection />
+              <WhyChooseSection />
+              <PartnerSection />
+              <ContactSection />
+              <Footer />
             </div>
           </motion.main>
         )}
