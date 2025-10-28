@@ -102,11 +102,13 @@ const AboutSection = () => {
                 className="object-contain opacity-80"
               />
             </motion.div>
-            <span className="inline-block px-6 py-2 rounded-full bg-brown-100 border border-brown-200 text-brown-800 font-medium text-sm tracking-wide mb-4">
-              About Us
+            <span className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-accent-100 via-brown-100 to-accent-100 border-2 border-brown-300/40 text-brown-700 font-bold text-sm tracking-widest mb-6 shadow-lg">
+              ABOUT US
             </span>
-            <h2 className="text-4xl md:text-6xl font-bold text-brown-800 mb-6">
-              Our Story
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6">
+              <span className="bg-gradient-to-r from-brown-900 via-accent-700 to-brown-900 bg-clip-text text-transparent drop-shadow-sm">
+                Our Story
+              </span>
             </h2>
           </motion.div>
 

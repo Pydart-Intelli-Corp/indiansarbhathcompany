@@ -83,13 +83,15 @@ const ProductsSection = () => {
           className="text-center mb-16"
         >
           <motion.div variants={itemVariants}>
-            <div className="badge-modern mb-6">
-              Our Products
+            <div className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-accent-100 via-neutral-100 to-accent-100 border-2 border-accent-300/40 mb-6 shadow-lg">
+              <span className="text-accent-700 font-bold text-sm tracking-widest uppercase">Our Products</span>
             </div>
-            <h2 className="heading-modern-lg mb-8 text-neutral-800">
-              Authentic Flavors
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8">
+              <span className="bg-gradient-to-r from-neutral-900 via-accent-600 to-neutral-900 bg-clip-text text-transparent drop-shadow-sm">
+                Authentic Flavors
+              </span>
             </h2>
-            <p className="text-modern-base text-neutral-600 max-w-3xl mx-auto">
+            <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
               From traditional recipes to modern innovations, each product captures 
               the essence of India's beloved summer refreshment.
             </p>

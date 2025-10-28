@@ -80,11 +80,19 @@ const ContactSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-6 py-2 rounded-full bg-brown-100 border border-brown-200 text-brown-700 font-medium text-sm tracking-wide mb-6">
+          <span className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-brown-100 via-accent-100 to-brown-100 border-2 border-brown-300/40 text-brown-700 font-bold text-sm tracking-widest mb-6 shadow-lg uppercase">
             Contact Us
           </span>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-            Indian <span className="text-brown-600">Sarbhath</span> Company
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6">
+            <span className="bg-gradient-to-r from-gray-900 via-brown-700 to-gray-900 bg-clip-text text-transparent drop-shadow-sm">
+              Indian
+            </span>{' '}
+            <span className="bg-gradient-to-r from-brown-600 via-accent-600 to-brown-600 bg-clip-text text-transparent drop-shadow-sm">
+              Sarbhath
+            </span>{' '}
+            <span className="bg-gradient-to-r from-gray-900 via-brown-700 to-gray-900 bg-clip-text text-transparent drop-shadow-sm">
+              Company
+            </span>
           </h2>
           <p className="text-2xl text-gray-700 font-light mb-8">
             Refreshing India, One Bottle at a Time.

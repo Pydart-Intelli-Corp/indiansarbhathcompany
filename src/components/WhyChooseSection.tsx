@@ -93,15 +93,19 @@ const WhyChooseSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-6 py-2 rounded-full bg-brown-100 border border-brown-200 text-brown-700 font-medium text-sm tracking-wide mb-6">
+          <span className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-brown-100 via-accent-100 to-brown-100 border-2 border-brown-300/40 text-brown-700 font-bold text-sm tracking-widest mb-6 shadow-lg uppercase">
             Why Choose Us
           </span>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-8">
-            The Indian Sarbhath
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8">
+            <span className="bg-gradient-to-r from-gray-900 via-brown-700 to-gray-900 bg-clip-text text-transparent drop-shadow-sm">
+              The Indian Sarbhath
+            </span>
             <br />
-            <span className="text-accent-600">Difference</span>
+            <span className="bg-gradient-to-r from-accent-600 via-brown-500 to-accent-600 bg-clip-text text-transparent drop-shadow-sm">
+              Difference
+            </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             We're more than just a beverage company. We're guardians of tradition, 
             innovators of taste, and champions of authentic Indian refreshment.
           </p>

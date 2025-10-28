@@ -56,17 +56,21 @@ const MissionSection = () => {
           transition={{ duration: 0.8 }}
           className="mb-12"
         >
-          <div className="badge-modern mb-8">
-            Our Mission
+          <div className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-brown-100 via-accent-100 to-brown-100 border-2 border-brown-300/40 mb-8 shadow-lg">
+            <span className="text-brown-700 font-bold text-sm tracking-widest uppercase">Our Mission</span>
           </div>
           
           <motion.h2 
-            className="heading-modern-lg text-neutral-800 mb-8 leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 leading-tight"
             whileHover={{ scale: 1.02 }}
           >
-            Reviving India's
+            <span className="bg-gradient-to-r from-neutral-900 via-brown-700 to-neutral-900 bg-clip-text text-transparent drop-shadow-sm">
+              Reviving India's
+            </span>
             <br />
-            <span className="text-accent-600">Lost Traditional Drinks</span>
+            <span className="bg-gradient-to-r from-accent-600 via-brown-500 to-accent-600 bg-clip-text text-transparent drop-shadow-sm">
+              Lost Traditional Drinks
+            </span>
           </motion.h2>
         </motion.div>
 

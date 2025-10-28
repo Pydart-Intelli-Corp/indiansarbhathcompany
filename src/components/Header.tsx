@@ -54,20 +54,16 @@ const Header = () => {
             className="flex items-center space-x-4 cursor-pointer"
           >
             <motion.div
-              className={`w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center shadow-medium transition-all duration-300 overflow-hidden ${
-                isScrolled 
-                  ? 'bg-white border border-accent-200' 
-                  : 'bg-white/90 border border-white/30'
-              }`}
+              className="w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center overflow-hidden"
               whileHover={{ rotate: 5, scale: 1.1 }}
               transition={{ duration: 0.3 }}
             >
               <Image
                 src="/logo.png"
                 alt="Indian Sarbhath Company Logo"
-                width={40}
-                height={40}
-                className="object-contain"
+                width={48}
+                height={48}
+                className="object-contain drop-shadow-lg"
                 priority
               />
             </motion.div>

@@ -46,11 +46,16 @@ const PartnerSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-6 py-2 rounded-full bg-brown-100 border border-brown-200 text-brown-700 font-medium text-sm tracking-wide mb-6">
+          <span className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-brown-100 via-accent-100 to-brown-100 border-2 border-brown-300/40 text-brown-700 font-bold text-sm tracking-widest mb-6 shadow-lg uppercase">
             Join the Movement
           </span>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-8">
-            Partner with <span className="text-brown-600">Us</span>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8">
+            <span className="bg-gradient-to-r from-gray-900 via-brown-700 to-gray-900 bg-clip-text text-transparent drop-shadow-sm">
+              Partner with
+            </span>{' '}
+            <span className="bg-gradient-to-r from-brown-600 via-accent-600 to-brown-600 bg-clip-text text-transparent drop-shadow-sm">
+              Us
+            </span>
           </h2>
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-8">
             We're more than a drink — we're a revival of Indian culture.

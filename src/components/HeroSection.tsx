@@ -8,6 +8,28 @@ const HeroSection = () => {
   const sectionRef = useRef(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoLoaded, setVideoLoaded] = useState(false)
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
+  
+  // All available videos
+  const videos = [
+    '/11690-231758935_medium.mp4',
+    '/4902127-hd_1920_1080_30fps.mp4',
+    '/4902170-hd_1920_1080_30fps.mp4',
+    '/4902377-hd_1920_1080_30fps.mp4'
+  ]
+  
+  // Shuffle array function
+  const shuffleArray = (array: string[]) => {
+    const shuffled = [...array]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled
+  }
+  
+  // Shuffled videos list
+  const [shuffledVideos] = useState(() => shuffleArray(videos))
   
   const { scrollY } = useScroll()
   
@@ -23,7 +45,12 @@ const HeroSection = () => {
         console.log("Video autoplay failed:", error)
       })
     }
-  }, [])
+  }, [currentVideoIndex])
+  
+  // Handle video end - play next video in shuffled order
+  const handleVideoEnd = () => {
+    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % shuffledVideos.length)
+  }
 
   return (
     <section 
@@ -39,13 +66,14 @@ const HeroSection = () => {
         <video
           ref={videoRef}
           autoPlay
-          loop
           muted
           playsInline
           onLoadedData={() => setVideoLoaded(true)}
+          onEnded={handleVideoEnd}
+          key={currentVideoIndex}
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/4902170-hd_1920_1080_30fps.mp4" type="video/mp4" />
+          <source src={shuffledVideos[currentVideoIndex]} type="video/mp4" />
         </video>
         
         {/* Dark overlay */}
@@ -84,40 +112,6 @@ const HeroSection = () => {
         style={{ opacity, y: textY }}
         className="relative z-20 container-modern text-center text-white px-4"
       >
-        {/* Logo with scroll animation */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5, y: -50 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
-          className="mb-6 flex justify-center"
-        >
-          <motion.div
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            className="relative"
-          >
-            <Image
-              src="/logo.png"
-              alt="Indian Sarbhath Company"
-              width={60}
-              height={60}
-              className="object-contain filter drop-shadow-2xl"
-              priority
-            />
-            <motion.div
-              className="absolute inset-0 bg-accent-400/20 rounded-full blur-xl"
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.5, 0.8, 0.5],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          </motion.div>
-        </motion.div>
-
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
